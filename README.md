@@ -8,6 +8,11 @@
 </a>
 </div>
 
+<div align="center">
+
+[English](README.md) | [简体中文](README.zh-CN.md)
+
+</div>
 
 # SurfSense
 While tools like NotebookLM and Perplexity are impressive and highly effective for conducting research on any topic/query, SurfSense elevates this capability by integrating with your personal knowledge base. It is a highly customizable AI research agent, connected to external sources such as Search Engines (SearxNG, Tavily, LinkUp), Slack, Linear, Jira, ClickUp, Confluence, Gmail, Notion, YouTube, GitHub, Discord, Airtable, Google Calendar, Luma, Elasticsearch and more to come.
@@ -141,19 +146,24 @@ Check out our public roadmap and contribute your ideas or feedback:
 
 ### Installation Options
 
-SurfSense provides two installation methods:
+SurfSense provides three options to get started:
 
-1. **[Docker Installation](https://www.surfsense.net/docs/docker-installation)** - The easiest way to get SurfSense up and running with all dependencies containerized.
+1. **[SurfSense Cloud](https://www.surfsense.com/login)** - The easiest way to try SurfSense without any setup.
+   - No installation required
+   - Instant access to all features
+   - Perfect for getting started quickly
+
+2. **[Docker Installation (Recommended for Self-Hosting)](https://www.surfsense.net/docs/docker-installation)** - Easy way to get SurfSense up and running with all dependencies containerized.
    - Includes pgAdmin for database management through a web UI
    - Supports environment variable customization via `.env` file
    - Flexible deployment options (full stack or core services only)
    - No need to manually edit configuration files between environments
 
-2. **[Manual Installation (Recommended)](https://www.surfsense.net/docs/manual-installation)** - For users who prefer more control over their setup or need to customize their deployment.
+3. **[Manual Installation](https://www.surfsense.net/docs/manual-installation)** - For users who prefer more control over their setup or need to customize their deployment.
 
-Both installation guides include detailed OS-specific instructions for Windows, macOS, and Linux.
+Docker and manual installation guides include detailed OS-specific instructions for Windows, macOS, and Linux.
 
-Before installation, make sure to complete the [prerequisite setup steps](https://www.surfsense.net/docs/) including:
+Before self-hosting installation, make sure to complete the [prerequisite setup steps](https://www.surfsense.net/docs/) including:
 - Auth setup
 - **File Processing ETL Service** (choose one):
   - Unstructured.io API key (supports 34+ formats)

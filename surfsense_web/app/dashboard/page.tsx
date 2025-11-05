@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Logo } from "@/components/Logo";
 import { ThemeTogglerComponent } from "@/components/theme/theme-toggle";
@@ -34,16 +33,8 @@ import {
 } from "@/components/ui/card";
 import { Spotlight } from "@/components/ui/spotlight";
 import { Tilt } from "@/components/ui/tilt";
+import { useUser } from "@/hooks";
 import { useSearchSpaces } from "@/hooks/use-search-spaces";
-import { apiClient } from "@/lib/api";
-
-interface User {
-	id: string;
-	email: string;
-	is_active: boolean;
-	is_superuser: boolean;
-	is_verified: boolean;
-}
 
 /**
  * Formats a date string into a readable format
@@ -163,35 +154,8 @@ const DashboardPage = () => {
 
 	const { searchSpaces, loading, error, refreshSearchSpaces } = useSearchSpaces();
 
-	// User state management
-	const [user, setUser] = useState<User | null>(null);
-	const [isLoadingUser, setIsLoadingUser] = useState(true);
-	const [userError, setUserError] = useState<string | null>(null);
-
 	// Fetch user details
-	useEffect(() => {
-		const fetchUser = async () => {
-			try {
-				if (typeof window === "undefined") return;
-
-				try {
-					const userData = await apiClient.get<User>("users/me");
-					setUser(userData);
-					setUserError(null);
-				} catch (error) {
-					console.error("Error fetching user:", error);
-					setUserError(error instanceof Error ? error.message : "Unknown error occurred");
-				} finally {
-					setIsLoadingUser(false);
-				}
-			} catch (error) {
-				console.error("Error in fetchUser:", error);
-				setIsLoadingUser(false);
-			}
-		};
-
-		fetchUser();
-	}, []);
+	const { user, loading: isLoadingUser, error: userError } = useUser();
 
 	// Create user object for UserDropdown
 	const customUser = {
@@ -292,7 +256,7 @@ const DashboardPage = () => {
 												mass: 0.2,
 											}}
 										/>
-										<div className="flex flex-col h-full overflow-hidden rounded-xl border bg-muted/30 backdrop-blur-sm transition-all hover:border-primary/50">
+										<div className="flex flex-col h-full justify-between overflow-hidden rounded-xl border bg-muted/30 backdrop-blur-sm transition-all hover:border-primary/50">
 											<div className="relative h-32 w-full overflow-hidden">
 												<Link href={`/dashboard/${space.id}/documents`} key={space.id}>
 													<Image
@@ -337,15 +301,19 @@ const DashboardPage = () => {
 													</div>
 												</div>
 											</div>
-											<Link href={`/dashboard/${space.id}/documents`} key={space.id}>
-												<div className="flex flex-1 flex-col justify-between p-4">
+											<Link
+												className="flex flex-1 flex-col p-4 cursor-pointer"
+												href={`/dashboard/${space.id}/documents`}
+												key={space.id}
+											>
+												<div className="flex flex-1 flex-col justify-between p-1">
 													<div>
 														<h3 className="font-medium text-lg">{space.name}</h3>
 														<p className="mt-1 text-sm text-muted-foreground">
 															{space.description}
 														</p>
 													</div>
-													<div className="mt-4 flex justify-between text-xs text-muted-foreground">
+													<div className="mt-4  text-xs text-muted-foreground">
 														{/* <span>{space.title}</span> */}
 														<span>
 															{t("created")} {formatDate(space.created_at)}
